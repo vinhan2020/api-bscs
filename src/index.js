@@ -20,8 +20,7 @@ app.use(express.urlencoded({
 app.use(express.json())
 route(app)
 
-server.listen(port, async () =>
+app.listen(port, async () =>
 {
-    await botControl()
     console.log(`Example app listening at http://localhost:${port}`)
 })
