@@ -3,7 +3,7 @@ const Token = require('../models/token')
 const { returnError, returnSuccess } = require('../helpers/returnRequest')
 class TokenController
 {
-    async CreateToken()
+    async CreateToken(req, res, next)
     {
         const { tokenName, tokenSymbol, decimals, totalSupply } = req.body
         if (!tokenName)
@@ -47,7 +47,7 @@ class TokenController
             })
     }
 
-    async GetListToken()
+    async GetListToken(req, res, next)
     {
         await Token.find()
             .then(listToken =>
@@ -60,7 +60,7 @@ class TokenController
             })
     }
 
-    async SaveHash()
+    async SaveHash(req, res, next)
     {
         const { tokenName, tokenSymbol, txHash } = req.body
         if (!tokenName)

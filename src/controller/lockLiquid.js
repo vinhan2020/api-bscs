@@ -5,7 +5,7 @@ const loclLiquid = require('../models/loclLiquid')
 const e = require('express')
 class LockLiquidController
 {
-    async CreateLockLiqInfo()
+    async CreateLockLiqInfo(req, res, next)
     {
         const { title, owner, amount, lickUntil, pair, decimals } = req.body
         if (!pair)
@@ -55,7 +55,7 @@ class LockLiquidController
             })
     }
 
-    async getLockLPInfo()
+    async getLockLPInfo(req, res, next)
     {
         var query = require('url').parse(req.url, true).query
         const pair = query.pair
@@ -83,7 +83,7 @@ class LockLiquidController
             })
     }
 
-    async saveHashLockLP()
+    async saveHashLockLP(req, res, next)
     {
         const { txHash, pair, owner } = req.body
         if (!txHash)
