@@ -6,7 +6,7 @@ class LockLiquidController
 {
     async CreateLockLiqInfo(req, res, next)
     {
-        const { title, owner, amount, lickUntil, pairAddress, decimals } = req.body
+        const { title, owner, amount, lickUntil, pairAddress, decimals, totalSupply } = req.body
         if (!pairAddress)
         {
             return returnError(req, res, "Missing pairAddress", consts.httpStatusCodes.NOT_FOUND, null)
@@ -26,6 +26,10 @@ class LockLiquidController
         if (!lickUntil)
         {
             return returnError(req, res, "Missing lickUntil", consts.httpStatusCodes.NOT_FOUND, null)
+        }
+        if (!totalSupply)
+        {
+            return returnError(req, res, "Missing totalSupply", consts.httpStatusCodes.NOT_FOUND, null)
         }
         await loclLiquid.findOne({ pairAddress, owner })
             .then(async dataLock =>
