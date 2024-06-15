@@ -121,7 +121,7 @@ class LockLiquidController
                     })
                     .catch(e =>
                     {
-                        return returnError(req, res, "Save txHash lock lp failed", consts.httpStatusCodes.BAD_REQUEST, null)
+                        return returnError(req, res, "Save txHash lock lp failed", consts.httpStatusCodes.BAD_REQUEST, e)
 
                     })
             })

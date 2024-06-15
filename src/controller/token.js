@@ -101,7 +101,7 @@ class TokenController
                         })
                 } else
                 {
-                    return returnError(req, res, "Token not found", consts.httpStatusCodes.BAD_REQUEST, e)
+                    return returnError(req, res, "Token not found", consts.httpStatusCodes.BAD_REQUEST, null)
                 }
             })
             .catch(e =>
