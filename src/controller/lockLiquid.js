@@ -30,9 +30,9 @@ class LockLiquidController
         await loclLiquid.findOne({ pairAddress, owner })
             .then(async dataLock =>
             {
-                if (!dataLock)
+                if (dataLock)
                 {
-                    return returnError(req, res, "Lock info not found", consts.httpStatusCodes.NOT_FOUND, null)
+                    return returnError(req, res, `Lock LP info with owner: ${owner} - pairAddress: ${pairAddress} is alreadt exist`, consts.httpStatusCodes.NOT_FOUND, null)
                 }
                 const newLock = new LockLiquid({
                     pairAddress,
