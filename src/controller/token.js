@@ -45,6 +45,10 @@ class TokenController
                         return returnError(req, res, "Create new token failed", consts.httpStatusCodes.BAD_REQUEST, e)
                     })
             })
+            .catch(e =>
+            {
+                return returnError(req, res, "Token not found", consts.httpStatusCodes.BAD_REQUEST, e)
+            })
     }
 
     async GetListToken(req, res, next)
@@ -95,7 +99,14 @@ class TokenController
                         {
                             return returnError(req, res, "Udpate txHash failed", consts.httpStatusCodes.BAD_REQUEST, e)
                         })
+                } else
+                {
+                    return returnError(req, res, "Token not found", consts.httpStatusCodes.BAD_REQUEST, e)
                 }
+            })
+            .catch(e =>
+            {
+                return returnError(req, res, "Some thing went wrong with save hash token", consts.httpStatusCodes.BAD_REQUEST, e)
             })
     }
 }

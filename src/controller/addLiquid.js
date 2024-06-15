@@ -41,9 +41,9 @@ class AddLiquidController
         await AddLiquid.findOne({ pairAddress, owner })
             .then(async dataAddLP =>
             {
-                if (!dataAddLP)
+                if (dataAddLP)
                 {
-                    return returnError(req, res, "Add LP info not found", consts.httpStatusCodes.NOT_FOUND, null)
+                    return returnError(req, res, `Add LP info of ower: ${owner} - pair: ${pairAddress} is already exist`, consts.httpStatusCodes.NOT_FOUND, null)
                 }
                 const newAdd = new AddLiquid({
                     countractTokenA,
@@ -64,6 +64,10 @@ class AddLiquidController
                     {
                         return returnError(req, res, "Create add lp failed", consts.httpStatusCodes.BAD_REQUEST, e)
                     })
+            })
+            .catch(e =>
+            {
+                return returnError(req, res, "Some thing went wrong with Add LP", consts.httpStatusCodes.BAD_REQUEST, e)
             })
     }
 
@@ -130,7 +134,7 @@ class AddLiquidController
                     })
                     .catch(e =>
                     {
-                        return returnError(req, res, "Save txHash add lp failed", consts.httpStatusCodes.BAD_REQUEST, null)
+                        return returnError(req, res, "Save txHash add lp failed", consts.httpStatusCodes.BAD_REQUEST, e)
 
                     })
             })

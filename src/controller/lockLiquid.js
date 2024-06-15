@@ -52,6 +52,10 @@ class LockLiquidController
                         return returnError(req, res, "Create lock lp failed", consts.httpStatusCodes.BAD_REQUEST, e)
                     })
             })
+            .catch(e =>
+            {
+                return returnError(req, res, "Some thing went wrong", consts.httpStatusCodes.BAD_REQUEST, e)
+            })
     }
 
     async getLockLPInfo(req, res, next)
@@ -78,7 +82,7 @@ class LockLiquidController
             })
             .catch(e =>
             {
-                return returnError(req, res, "Something went wrong", consts.httpStatusCodes.BAD_REQUEST, e)
+                return returnError(req, res, "Something went wrong with get lock lp info", consts.httpStatusCodes.BAD_REQUEST, e)
             })
     }
 
