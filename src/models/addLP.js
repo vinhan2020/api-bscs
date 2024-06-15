@@ -22,7 +22,7 @@ const AddLiquid = mongoose.Schema({
         default: ""
     },
     pairAddress: {
-        type: Date,
+        type: String,
         default: Date.now()
     },
     symbolTokenA: {
