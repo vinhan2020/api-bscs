@@ -1,16 +1,15 @@
 const consts = require('../constants/httpCode')
-const LockLiquid = require('../models/loclLiquid')
+const LockLiquid = require('../models/lockLiquid')
 const { returnError, returnSuccess } = require('../helpers/returnRequest')
-const loclLiquid = require('../models/loclLiquid')
-const e = require('express')
+const loclLiquid = require('../models/lockLiquid')
 class LockLiquidController
 {
     async CreateLockLiqInfo(req, res, next)
     {
-        const { title, owner, amount, lickUntil, pair, decimals } = req.body
-        if (!pair)
+        const { title, owner, amount, lickUntil, pairAddress, decimals } = req.body
+        if (!pairAddress)
         {
-            return returnError(req, res, "Missing pair", consts.httpStatusCodes.NOT_FOUND, null)
+            return returnError(req, res, "Missing pairAddress", consts.httpStatusCodes.NOT_FOUND, null)
         }
         if (!title)
         {
@@ -28,7 +27,7 @@ class LockLiquidController
         {
             return returnError(req, res, "Missing lickUntil", consts.httpStatusCodes.NOT_FOUND, null)
         }
-        await loclLiquid.findOne({ pair, owner })
+        await loclLiquid.findOne({ pairAddress, owner })
             .then(async dataLock =>
             {
                 if (!dataLock)
@@ -36,7 +35,7 @@ class LockLiquidController
                     return returnError(req, res, "Lock info not found", consts.httpStatusCodes.NOT_FOUND, null)
                 }
                 const newLock = new LockLiquid({
-                    pair,
+                    pairAddress,
                     decimals,
                     tokenName,
                     tokenSymbol,
@@ -58,17 +57,17 @@ class LockLiquidController
     async getLockLPInfo(req, res, next)
     {
         var query = require('url').parse(req.url, true).query
-        const pair = query.pair
+        const pairAddress = query.pairAddress
         const owner = query.owner
-        if (!pair)
+        if (!pairAddress)
         {
-            return returnError(req, res, "Missing pair", consts.httpStatusCodes.NOT_FOUND, null)
+            return returnError(req, res, "Missing pairAddress", consts.httpStatusCodes.NOT_FOUND, null)
         }
         if (!owner)
         {
             return returnError(req, res, "Missing owner", consts.httpStatusCodes.NOT_FOUND, null)
         }
-        await LockLiquid.findOne({ owner, pair })
+        await LockLiquid.findOne({ owner, pairAddress })
             .then(dataLock =>
             {
                 if (!dataLock)
@@ -85,27 +84,27 @@ class LockLiquidController
 
     async saveHashLockLP(req, res, next)
     {
-        const { txHash, pair, owner } = req.body
+        const { txHash, pairAddress, owner } = req.body
         if (!txHash)
         {
             return returnError(req, res, "Missing txHash", consts.httpStatusCodes.NOT_FOUND, null)
         }
-        if (!pair)
+        if (!pairAddress)
         {
-            return returnError(req, res, "Missing pair", consts.httpStatusCodes.NOT_FOUND, null)
+            return returnError(req, res, "Missing pairAddress", consts.httpStatusCodes.NOT_FOUND, null)
         }
         if (!owner)
         {
             return returnError(req, res, "Missing owner", consts.httpStatusCodes.NOT_FOUND, null)
         }
-        await LockLiquid.findOne({ pair, owner })
+        await LockLiquid.findOne({ pairAddress, owner })
             .then(async dataLock =>
             {
                 if (!dataLock)
                 {
                     return returnError(req, res, "Lock info not found", consts.httpStatusCodes.NOT_FOUND, null)
                 }
-                await LockLiquid.findOneAndUpdate({ owner, pair }, {
+                await LockLiquid.findOneAndUpdate({ owner, pairAddress }, {
                     $set: {
                         txHash: txHash
                     }

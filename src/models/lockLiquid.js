@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const LockLiquid = mongoose.Schema({
-    pair: {
+    pairAddress: {
         type: String,
         default: ''
     },
