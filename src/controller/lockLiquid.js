@@ -38,7 +38,7 @@ class LockLiquidController
                     title,
                     pairAddress,
                     decimals,
-                    tokenSymbol,
+                    lickUntil,
                     decimals,
                     totalSupply
                 })
